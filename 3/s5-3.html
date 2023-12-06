@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Операции с числами</title>
+</head>
+
+<body>
+
+    <h2>Операции с числами</h2>
+
+    <form id="operationForm">
+        <label for="operationSelect">Выберите операцию:</label>
+        <select id="operationSelect" name="operation">
+            <option value="even">Четные числа</option>
+            <option value="odd">Нечетные числа</option>
+            <option value="prime">Простые числа</option>
+            <option value="composite">Составные числа</option>
+        </select>
+        <br>
+        <label for="rangeInput">Введите диапазон (N):</label>
+        <input type="text" id="rangeInput" name="range" required>
+        <br>
+        <button type="button" onclick="CalculateThis()">Показать числа</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function CalculateThis() {
+            var oppSwitch = document.getElementById("operationSelect");
+            var chooseOpp = oppSwitch.value;
+
+            var arrEnter = document.getElementById("rangeInput");
+            var valueArr = parseInt(arrEnter.value);
+
+            var dockResult = document.getElementById("result");
+            dockResult.innerHTML = ""; // Очистим предыдущий результат
+
+            if (isNaN(valueArr) || valueArr <= 0) {
+                dockResult.innerHTML = "Пожалуйста, введите действительное положительное число для диапазона.";
+                return;
+            }
+
+            switch (chooseOpp) {
+                case "even":
+                    for (var i = 2; i <= valueArr; i += 2) {
+                        dockResult.innerHTML += i + " ";
+                    }
+                    break;
+                case "odd":
+                    for (var i = 1; i <= valueArr; i += 2) {
+                        dockResult.innerHTML += i + " ";
+                    }
+                    break;
+                case "prime":
+                    for (var i = 2; i <= valueArr; i++) {
+                        if (IsSimple(i)) {
+                            dockResult.innerHTML += i + " ";
+                        }
+                    }
+                    break;
+                case "composite":
+                    for (var i = 4; i <= valueArr; i++) {
+                        if (!IsSimple(i)) {
+                            dockResult.innerHTML += i + " ";
+                        }
+                    }
+                    break;
+                default:
+                    dockResult.innerHTML = "Выбрана неверная операция.";
+            }
+        }
+
+        function IsSimple(num) {
+            for (var i = 2; i < num; i++) {
+                if (num % i === 0) {
+                    return false;
+                }
+            }
+            return num > 1;
+        }
+    </script>
+
+</body>
+
+</html>
